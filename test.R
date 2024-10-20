@@ -3,8 +3,18 @@ t <- table(n)
 barplot(t)
 
 x <- 10
+a <- 2
 y <- 1:4
 z <- 2:5
+
+print(x > a)
+print(x + a)
+
+if (x > a) {
+    print("Yes.")
+} else {
+    print("No.")
+}
 
 print(y * z) # multiplication
 print(c(y, z)) # concatenation
@@ -16,3 +26,5 @@ print(sum(rep(x, 2)))
 
 greeting <- "My name is George!"
 print(greeting)
+
+# More at the file of the first lesson...
