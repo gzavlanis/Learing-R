@@ -27,4 +27,12 @@ print(sum(rep(x, 2)))
 greeting <- "My name is George!"
 print(greeting)
 
+#make a plot
+bar_values <- c(3, 5, 8, 2, 9)
+bar_names <- c("A", "B", "C", "D", "E")
+
+barplot(bar_values, names.arg = bar_names, col = "blue") # barplot
+hist(iris$Petal.Length) # histogram
+boxplot(iris$Sepal.Length ~ iris$Species) # boxplot
+
 # More at the file of the first lesson...
