@@ -35,4 +35,3 @@ barplot(bar_values, names.arg = bar_names, col = "blue") # barplot
 hist(iris$Petal.Length) # histogram
 boxplot(iris$Sepal.Length ~ iris$Species) # boxplot
 
-# More at the file of the first lesson..
