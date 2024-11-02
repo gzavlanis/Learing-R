@@ -3,7 +3,7 @@
 # Editing and printing
 data(iris)
 print(ls())
-# print(help("iris")) # helpin data
+print(help("iris")) # help in data
 
 # edit(iris) # edit data
 print(head(iris))
