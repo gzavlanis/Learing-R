@@ -112,3 +112,68 @@ print(correlation_matrix["Exam_Score", "Hours_Studied"])
 # a.
 pokedex <- read.csv("./Data/pokedex.csv")
 print(str(pokedex))
+
+pokedex <- subset(pokedex, select = -Image)
+pokedex$names <- pokedex$Name
+pokedex <- subset(pokedex, select = -Name)
+
+print("Final dataframe:")
+print(str(pokedex))
+
+View(pokedex[pokedex$names == "Omastar", ])
+
+# b.
+print("Number of pokemon that don't have second type:")
+print(nrow(pokedex[is.na(pokedex$Type.2)]))
+
+print("Number of pokemon whose speed is less than 60:")
+print(nrow(pokedex[pokedex$Speed < 60, ]))
+
+# c.
+watertype_pokemon <- pokedex[(pokedex$Type.1 == "Water") | (pokedex$Type.2 == "Water"), ]
+print("Average of attack of water type pokemon:")
+print(mean(watertype_pokemon$Attack))
+
+fairytype_pokemon <- pokedex[(pokedex$Type.1 == "Fairy") | (pokedex$Type.2 == "Fairy"), ]
+print("Pokemon with the greatest HP value:")
+print(fairytype_pokemon[which.max(fairytype_pokemon$HP), "names"])
+
+# d.
+min_max_norm <- function(x) {
+    (x - min(x)) / (max(x) - min(x))
+}
+
+pokedex$NormHP <- min_max_norm(pokedex$HP)
+pokedex$NormAttack <- min_max_norm(pokedex$Attack)
+pokedex$NormDefense <- min_max_norm(pokedex$Defense)
+
+print(head(pokedex))
+
+pokedex_ordered_by_hormhp <- pokedex[order(pokedex$NormHP, decreasing = TRUE), ]
+print("Top 3 highest NormHP Pokemon:")
+print(pokedex_ordered_by_hormhp[1:3, "names"])
+
+print("Median value of the NormAttack attribute:")
+print(median(pokedex$NormAttack))
+
+print("Average value of the NormDefense attribute:")
+print(mean(pokedex$NormDefense))
+
+# e.
+pokedex$Performance <- (pokedex$NormHP * pokedex$NormAttack * pokedex$NormDefense) + 0.0002
+
+pokedex$Grade <- with(
+    pokedex, ifelse(
+        Performance > 0 & Performance <= 0.15, "Weak",
+        ifelse(
+            Performance > 0.15 & Performance <= 0.2, "Normal", "Strong"
+        )
+    )
+)
+print(head(pokedex))
+
+print("Number of Pokemon with strong grade:")
+print(nrow(pokedex[pokedex$Grade == "Strong", ]))
+
+print("Grade of Pokemon named 'Haunter':")
+print(pokedex[pokedex$names == "Haunter", "Grade"])
