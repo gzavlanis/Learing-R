@@ -171,6 +171,7 @@ pokedex$Grade <- with(
     )
 )
 print(head(pokedex))
+write.csv(pokedex, "./Data/new_pokedex.csv")
 
 print("Number of Pokemon with strong grade:")
 print(nrow(pokedex[pokedex$Grade == "Strong", ]))
