@@ -169,3 +169,20 @@ fit <- predict(poly) # fit a nonlinear line
 plot(x, y)
 points(x, lr$coefficients[1] + lr$coefficients[2] * x, type = "l", col = 2) # draw the fitted line for the linear regression
 points(x, fit, type = "l", col = 4) # draw the fitted line with LOESS
+
+cars <- mtcars[order(mtcars$mpg),] # sort by mpg
+cars$cyl <- factor(cars$cyl) # grouping variable must be a factor
+cars$color[cars$cyl == 4] <- "red"
+cars$color[cars$cyl == 6] <- "blue"
+cars$color[cars$cyl == 8] <- "darkgreen"
+
+dotchart(cars$mpg, labels = row.names(cars), cex = .7, groups = cars$cyl, 
+         main = "Miles Per Gallon (MPG) of Car Models\nGrouped by Cylinder",
+         xlab = "Miles Per Gallon", color = cars$color, gcolor = "black")
+
+counts <- table(mtcars$gear, mtcars$cyl)
+barplot(counts, main = "Distribution of Car Cylinder Counts and Gears", xlab = "Number of Cylinders", ylab = "Counts",
+        col = c("#0000FFFF", "#0080FFFF", "#00FFFFFF"), legend = rownames(counts), beside = TRUE,
+        args.legend = list(x = "top", title = "Number of Gears"))
+
+
