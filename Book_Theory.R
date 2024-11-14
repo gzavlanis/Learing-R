@@ -86,3 +86,86 @@ str(assortment)
 # factors
 str(diamonds)
 head(diamonds$cut) # display first six values and the levels
+
+# Exploratory Data Analysis
+
+x <- rnorm(50)
+y <- x + rnorm(50, mean = 0, sd = 0.5)
+data <- as.data.frame(cbind(x, y))
+summary(data)
+
+ggplot(data, aes(x = x, y = y)) +
+  geom_point(size = 2) +
+  ggtitle("Scatterplot of X and Y") +
+  theme(axis.text = element_text(size = 12), axis.title = element_text(size = 14),
+        plot.title = element_text(size = 20, face = "bold"))
+
+data(anscombe) # load the anscombe dataset into the current workspace
+anscombe
+
+nrow(anscombe) # number of rows
+
+# generates levels to indicate which group each data point belongs to
+levels <- gl(4, nrow(anscombe))
+levels
+
+# Group anscombe into a data frame
+mydata <- with(anscombe, data.frame(x = c(x1, x2, x3, x4), y = c(y1, y2, y3, y4), mygroup = levels))
+mydata
+
+# Make scatterplots using the ggplot2 package
+theme_set(theme_bw()) # set plot color theme
+ggplot(mydata, aes(x, y)) + geom_point(size = 4) + geom_smooth(method = "lm", fill = NA, fullrange = TRUE) +
+  facet_wrap(~mygroup)
+
+# Dirty Data
+x <- c(1, 2, 3, NA, 4)
+is.na(x)
+mean(x)
+mean(x, na.rm = TRUE)
+
+DF <- data.frame(x = c(1, 2, 3), y = c(10, 20, NA))
+DF
+
+DF1 <- na.exclude(DF)
+DF1
+
+# Visualizing a Single Variable
+data(mtcars)
+dotchart(mtcars$mpg, labels = row.names(mtcars), cex = .7, main = "Miles Per Gallon (MPG) of Car Models", 
+         xlab = "MPG")
+
+barplot(table(mtcars$cyl),main = "Distribution of car Cylinder Counts",
+        xlab = "Number of Cylinders")
+
+# randomly generate 4000 observations from the log normal distribution
+income <- rlnorm(4000, meanlog = 4, sdlog = 0.7)
+summary(income)
+income <- 1000 * income
+summary(income)
+
+hist(income, breaks = 500, xlab = "Income", main = "Histogram of Income") # plot the histogram
+
+plot(density(log10(income), adjust = 0.5), main = "Distribution of Income (log10 scale)") # density plot
+rug(log10(income)) # add rug to the density plot
+
+data(diamonds)
+niceDiamonds <- diamonds[diamonds$cut == "Premium" | diamonds$cut == "Ideal",] # only keep the premium and ideal cuts
+summary(niceDiamonds$cut)
+
+ggplot(niceDiamonds, aes(x = price, fill = cut)) + geom_density(alpha = .3, color = NA) # plot density plot of prices
+ggplot(niceDiamonds, aes(x = log10(price), fill = cut)) + geom_density(alpha = .3, color = NA) # plot density plot of log10 of prices
+
+# Examining multiple variables
+# 75 numbers between 0 and 10 of uniform distribution
+x <- runif(75, 0, 10)
+x <- sort(x)
+y <- 200 + x^3 - 10 * x^2 + x + rnorm(75, 0, 20)
+
+lr <- lm(y ~ x) # linear regression
+poly <- loess(y ~ x) # LOESS
+fit <- predict(poly) # fit a nonlinear line
+
+plot(x, y)
+points(x, lr$coefficients[1] + lr$coefficients[2] * x, type = "l", col = 2) # draw the fitted line for the linear regression
+points(x, fit, type = "l", col = 4) # draw the fitted line with LOESS
