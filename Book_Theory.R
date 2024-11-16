@@ -185,4 +185,21 @@ barplot(counts, main = "Distribution of Car Cylinder Counts and Gears", xlab = "
         col = c("#0000FFFF", "#0080FFFF", "#00FFFFFF"), legend = rownames(counts), beside = TRUE,
         args.legend = list(x = "top", title = "Number of Gears"))
 
+# Scatter plot Matrix
+colors <- c("red", "green", "blue") # define colors
+pairs(iris[1:4], main = "Fisher's Iris Dataset", pch = 21, bg = colors[unclass(iris$Species)]) # draw the plot matrix
+par(xpd = TRUE) # set graphical parameter to clip plotting to the figure region
+legend(0.2, 0.02, horiz = TRUE, as.vector(unique(iris$Species)), fill = colors, bty = "n") # add legend
 
+plot(AirPassengers) # analyzing a variable over time
+
+income = rlnorm(5000, meanlog = log(40000), sdlog = log(5)) # generate random log normal income data
+
+# Part 1: Create the density plot
+plot(density(log10(income), adjust = 0.5), main = "Distribution of Account Values (log10 scale)")
+rug(log10(income)) # Add rug to the density plot
+
+# Part 2: Make the histogram:
+breaks = c(0, 1000, 5000, 10000, 50000, 100000, 5e5, 1e6, 2e7) # create log-like bins
+bins = cut(income, breaks, include.lowest = TRUE, labels = c("< 1K", "1-5K", "5-10K", "10-50K", "50-100K", "100-500K", "500K-1M","> 1M")) # 
+plot(bins,main = "Distribution of Account values", xlab = "Account value ($ USD)", ylab = "Number of Accounts", col = "blue")
