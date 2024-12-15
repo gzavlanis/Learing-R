@@ -1,6 +1,8 @@
 data(iris)
 library(hexbin)
 library(scatterplot3d)
+library(MASS)
+library(outliers)
 
 # Histograms
 hist(iris$Petal.Length, breaks = c(1.0, 3.0, 4.5, 4.0, 6.9))
@@ -33,3 +35,28 @@ scatterplot3d(iris$Sepal.Length, iris$Sepal.Width, iris$Petal.Length)
 species <- which(colnames(iris) == "Species")
 iris.pca <- prcomp(iris[,-species], center = T, scale = T)
 print(iris.pca)
+summary(iris.pca)
+plot(predict(iris.pca))
+# predict(iris.pca, newdata = x)
+
+# Multidimensional Scaling
+x <- iris[-102,]
+species <- which(colnames(x) == "Species")
+x.dist <- dist(x[,-species])
+x.sammon <- sammon(x.dist, k = 2)
+plot(x.sammon$points)
+
+# Parallel Coordinates, Radar and Star Plots
+x <- iris
+x$Species <- as.numeric(iris$Species)
+parcoord(x)
+stars(iris)
+stars(iris, locations = c(0, 0))
+
+# Correlation Coefficients
+cor(iris$Sepal.Length, iris$Sepal.Width)
+cor.test(iris$Sepal.Length, iris$Sepal.Width, method = "spearman")
+cor.test(iris$Sepal.Length, iris$Sepal.Width, method = "kendall")
+
+# Grubb’s Test for Outlier Detection
+grubbs.test(iris$Petal.Width)
