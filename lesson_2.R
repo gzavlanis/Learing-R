@@ -110,4 +110,3 @@ grubbs.test(iris$Sepal.Length, opposite = TRUE)
 grubbs.test(iris$Sepal.Width, opposite = TRUE)
 grubbs.test(iris$Petal.Length, opposite = TRUE)
 grubbs.test(iris$Petal.Width, opposite = TRUE)
-

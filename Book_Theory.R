@@ -202,4 +202,4 @@ rug(log10(income)) # Add rug to the density plot
 # Part 2: Make the histogram:
 breaks = c(0, 1000, 5000, 10000, 50000, 100000, 5e5, 1e6, 2e7) # create log-like bins
 bins = cut(income, breaks, include.lowest = TRUE, labels = c("< 1K", "1-5K", "5-10K", "10-50K", "50-100K", "100-500K", "500K-1M","> 1M")) # 
-plot(bins,main = "Distribution of Account values", xlab = "Account value ($ USD)", ylab = "Number of Accounts", col = "blue")
+plot(bins, main = "Distribution of Account values", xlab = "Account value ($ USD)", ylab = "Number of Accounts", col = "blue")
