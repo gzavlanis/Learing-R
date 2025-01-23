@@ -12,3 +12,4 @@ dist_matrix <- matrix(
 dist_object <- as.dist(dist_matrix)
 hc <- hclust(dist_object, method = "complete") # Perform complete linkage clustering
 plot(hc, labels = c("A", "B", "C", "D", "E"), main = "Complete Linkage Dendrogram") # Plot the dendrogram
+
