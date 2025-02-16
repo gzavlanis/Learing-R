@@ -5,6 +5,7 @@ library(ggplot2)
 library(cluster)
 library(factoextra)
 library(arules)
+library(e1071)
 
 # Define the distance matrix
 dist_matrix <- matrix(
@@ -61,3 +62,20 @@ trans <- as(basket, "transactions")
 rules <- apriori(trans, parameter = list(susp = 0.3, conf = 0.5, maxlen = 10, target = "rules"))
 beer_rules <- apriori(trans, parameter = list(supp = 0.3, conf = 0.5, maxlen = 10, minlen = 2), appearance = list(default = "lhs", rhs = "beer"))
 inspect(beer_rules)
+
+income <- c("high", "high", "medium", "low", "medium", "low")
+works <- c("no", "yes", "yes", "yes", "yes", "no")
+loan <- c("yes", "yes", "yes", "yes", "yes", "no")
+
+df <- data.frame(income, works, loan)
+df
+
+mb_mod <- naiveBayes(loan ~ ., data = df, laplace = 0)
+mb_mod
+
+income <- c("low")
+works <- c("no")
+test <- data.frame(income, works)
+
+pred <- predict(nb_mod, test, type = "raw")
+pred
